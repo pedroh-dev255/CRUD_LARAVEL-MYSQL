@@ -20,6 +20,13 @@ Route::group(['middleware' => 'web'], function(){
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 });
 
-Route::get('/usuarios', [App\Http\Controllers\UsuariosController::class, 'index']);
-Route::get('/usuarios/new', [App\Http\Controllers\UsuariosController::class, 'new']);
-Route::post('/usuarios/add', [App\Http\Controllers\UsuariosController::class, 'add']);
+//Visualizar dados
+Route::get('/usuarios', [App\Http\Controllers\UsuariosController::class, 'index'])->middleware('auth');
+//Cadastrar dados
+Route::get('/usuarios/new', [App\Http\Controllers\UsuariosController::class, 'new'])->middleware('auth');
+Route::post('/usuarios/add', [App\Http\Controllers\UsuariosController::class, 'add'])->middleware('auth');
+//Editar dados
+Route::get('/usuarios/{id}/edit', [App\Http\Controllers\UsuariosController::class, 'edit'])->middleware('auth');
+Route::post('/usuarios/update/{id}', [App\Http\Controllers\UsuariosController::class, 'update'])->middleware('auth');
+//Deletar dados
+Route::delete('/usuarios/delete/{id}', [App\Http\Controllers\UsuariosController::class, 'delete'])->middleware('auth');

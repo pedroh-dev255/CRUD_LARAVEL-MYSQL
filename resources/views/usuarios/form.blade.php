@@ -6,7 +6,7 @@
         <div class="col-md-8">
             <input type="button" value="Voltar" onClick='window.history.go(-1)'>
             <div class="card">
-                <div class="card-header">{{ __('Adicionar Usuarios') }}</div>
+                <div class="card-header">@if(Request::is('*/edit'))  {{ __('Editar Usuario') }} @else {{ __('Adicionar Usuarios') }} @endif</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -14,6 +14,22 @@
                             {{ session('status') }}
                         </div>
                     @endif
+
+                    @if(Request::is('*/edit'))
+                    <form action="{{url('usuarios/update')}}/{{ $usuario->id }}" method="POST">
+                        @csrf
+                        <div class="form-group">
+                            <label for="exampleInputName">Nome:</label>
+                            <input type="text" name="name" class="form-control" value ="{{ $usuario->name }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Email:</label>
+                            <input type="email" name="email" class="form-control" value ="{{ $usuario->email }}">
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-primary">Editar</button>
+                    </form>
+                    @else
                     <form action="{{ url('usuarios/add')}}" method="POST">
                         @csrf
                         <div class="form-group">
@@ -27,6 +43,7 @@
                         <br>
                         <button type="submit" class="btn btn-primary">Cadastrar</button>
                     </form>
+                    @endif
                 </div>
             </div>
         </div>

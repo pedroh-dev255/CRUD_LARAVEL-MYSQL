@@ -21,14 +21,24 @@
                                 <th>ID</th>
                                 <th>Nome</th>
                                 <th>Email</th>
+                                <th>Editar</th>
+                                <th>Deletar</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($usuarios as $u)
                             <tr>
                                 <td>{{ $u -> id}}</td>
-                                <td>{{  $u-> name }}</td>
+                                <td>{{ $u-> name }}</td>
                                 <td>{{ $u->email }}</td>
+                                <td><a href="usuarios/{{ $u->id }}/edit" style="font-size: 13px" class="btn btn-info">Edit 📋</a></td>
+                                <td>
+                                    <form action="{{url('usuarios/delete')}}/{{ $u->id }}" method="POST">
+                                         @csrf
+                                         @method('delete')
+                                        <button type="submit" class="btn btn-danger">Del 🗑️</button>
+                                    </form>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
